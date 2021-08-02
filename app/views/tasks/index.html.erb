@@ -13,10 +13,46 @@
     </tr>
   </thead>
   <tbody>
-  <% @tasks.each do |list|%>
-    <tr>
-      <td><%= list.description %></td>
-    </tr>
-  <% end %>
+  <% @tasks.each do |task|%>
+    <% if task.complete %>
+      <tr class="table-secondary">
+        <td class="text-decoration-line-through"><%= task.description %></td>
+        <%= form_for(task) do |f| %>
+          <td>
+            <%= f.check_box :complete,
+                            :checked => false,
+                            :style => "visibility: hidden" 
+              %>
+          </td>
+          <td>
+            <%= f.submit "Not Complete", class: 'btn btn-outline-secondary btn-sm', 
+                                        id: "complete-#{task.id}"
+              %>
+          </td>
+        <% end %>
+        <td>
+          <%= link_to 'Edit', edit_task_path(task.id), id: "edit-#{task.id}" %>
+        </td>
+      </tr>
+    <% else %>
+      <tr>
+        <td><%= task.description %></td>
+        <%= form_for(task) do |f| %>
+          <td><%= f.check_box :complete, 
+                              :checked => true, 
+                              :style => "visibility: hidden" 
+              %>
+          </td>
+          <td>
+            <%= f.submit "Complete", class: 'btn btn-outline-secondary btn-sm',
+                                    id: "complete-#{task.id}"%>
+          </td>    
+        <% end %>
+        <td>
+          <%= link_to 'Edit', edit_task_path(task.id), id: "edit-#{task.id}" %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>  
  </tbody>
 </table>
