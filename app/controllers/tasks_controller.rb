@@ -1,9 +1,9 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :your_task, only: :edit
+  before_action :your_task, only: %i[edit destroy]
 
   def index
-    @tasks = Task.all
+    @tasks = Task.where(user: current_user)
   end
   
   def new
@@ -36,14 +36,19 @@ class TasksController < ApplicationController
     end
   end
 
-
+  def destroy
+    @task = Task.find(params[:id])
+    @task.destroy
+    redirect_to root_path
+  end
+  
   private
 
   def your_task
     @task = Task.find(params[:id])
     if current_user != @task.user
+      flash[:notice] = "That task is not yours"
       redirect_to root_path
-      flash[:alert] = "That task is not yours"
     end
   end
 

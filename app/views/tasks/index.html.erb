@@ -33,6 +33,11 @@
         <td>
           <%= link_to 'Edit', edit_task_path(task.id), id: "edit-#{task.id}" %>
         </td>
+        <td>
+          <%= link_to 'Delete', task_path(task.id),method: :delete, 
+                                                 id: "delete-#{task.id}" 
+          %>
+        </td>
       </tr>
     <% else %>
       <tr>
@@ -50,6 +55,11 @@
         <% end %>
         <td>
           <%= link_to 'Edit', edit_task_path(task.id), id: "edit-#{task.id}" %>
+        </td>
+        <td>
+          <%= link_to 'Delete', task_path(task.id),method: :delete, 
+                                                 id: "delete-#{task.id}" 
+          %>
         </td>
       </tr>
     <% end %>

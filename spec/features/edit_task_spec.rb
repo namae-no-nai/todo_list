@@ -38,9 +38,9 @@ feature "edit a task on list" do
     task_3 = Task.create!(description: 'Third Post', user: user_2)
 
     visit '/'
-    click_on "edit-#{task_3.id}"
+    visit @task_3
     expect(current_path).to eq(root_path)
     expect(task_3.description).to eq('Third Post')
-    expect(page).to have_content("That task is not yours")
+    expect(page).to_not have_content('Third Post')
   end
 end
