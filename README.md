@@ -1,24 +1,22 @@
-# README
+# App Rails de To Do
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Necessário para executar o projeto
+  Ruby  2.7.3
+  Rails 6.1.4
+  Bootstrap 5.0.2
+  
+## Nesse todo list é possível:
+* Adicionar uma tarefa (que é simplesmente um campo de texto)
+* Editar uma tarefa
+* Remover uma tarefa
+* Marcar uma tarefa como completa
 
-Things you may want to cover:
+## Quando um usuário **marca** uma tarefa como completa:
+* O sistema exibe para o usuário uma bela frase aleatória de "Parabéns" ["Muito bem", "Continue assim", "Tarefa Concluída", "Aeeeee", "Sucesso!!!"] de uma cor hexadecimal aleatória dessa lista [#7B68EE, #6A5ACD, #800000, #2F4F4F].
 
-* Ruby version
+* Além disso, também envia um evento para o sistema de tracking. Por simplicidade, o sistema de tracking é só uma tabelinha de eventos que tem um **tipo de evento** (string) e um campo **properties** (json) em que você manda dados relevantes. No caso, guardar um tipo 'Congratulations', enquanto que e a cor e a frase aleatória de "Parabéns" são guardadas nesse campo json.
 
-* System dependencies
+## Quando um usuário **desmarca** a tarefa como completa:
+* O sistema exibe para o usuário uma triste frase aleatória de "Poxa vida..." ["Que pena", "Ah não", "Que triste", "Mais empenho", "Infelicidade"] de uma cor hexadecimal aleatória da mesma lista [#7B68EE, #6A5ACD, #800000, #2F4F4F].
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Também marca trackeia com o tipo 'Shame' e guardando a cor e frase no campo json.
