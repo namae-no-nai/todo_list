@@ -11,10 +11,9 @@ feature "delete a task on list" do
 
   scenario "sucessfully" do
     visit '/'
-    click_on "delete-#{@task_1.id}"
     expect(current_path).to eq(root_path)
+    expect(page).to have_content 'First Post'
     expect(page).to have_content 'Second Post'
-    expect(page).to_not have_content 'First Post'
     expect(page).to_not have_content 'Third Post'
   end
 end
