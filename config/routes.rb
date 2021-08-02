@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :tasks, only: %i[index new create edit update]
+  resources :tasks
   root to: "tasks#index"
 end
