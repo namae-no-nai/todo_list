@@ -13,7 +13,7 @@
   <body>
     <%= render 'shared/navbar' %>
     <% flash.each do |name, msg| -%>
-        <%= content_tag :div, msg, class: name %>
+        <%= content_tag :div, msg, class: "#{name} alert alert-info" %>
       <% end -%>
 
     <div class="container">

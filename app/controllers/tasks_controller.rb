@@ -1,6 +1,8 @@
+require 'json'
+
 class TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :your_task, only: %i[edit destroy]
+  before_action :your_task, only: %i[edit update destroy]
 
   def index
     @tasks = Task.where(user: current_user)
@@ -27,8 +29,8 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
-    your_task
     if @task.update(task_params)
+      reaction(@task) 
       redirect_to root_path
     else
       flash[:notice] = "Description can't be blank"
@@ -43,6 +45,31 @@ class TasksController < ApplicationController
   end
   
   private
+
+  def reaction(task)
+    color = {"color-1": "#7B68EE", 
+             "color-2": "#6A5ACD",
+             "color-3": "#800000",
+             "color-4": "#2F4F4F"}.to_a.sample
+    if task.complete
+      phrase = ["Great Work", "Awesome", "Mission complete", "Wowww", "Nice!!!"].sample
+      @tracking = Tracking.create(event: "Congratulations", 
+                                  properties: {
+                                                phrase: phrase, 
+                                                color: color[1]
+                                              }.to_json
+                                 )
+    else
+      phrase = ["Good grief", "Bummer", "Awefull", "Mission Failed", "Not nice"].sample
+      @tracking = Tracking.create(event: "Shame", 
+                                  properties: { 
+                                                phrase: phrase, 
+                                                color: color[1]
+                                              }.to_json
+                                 )
+    end
+    flash[color[0]] = phrase
+  end
 
   def your_task
     @task = Task.find(params[:id])
