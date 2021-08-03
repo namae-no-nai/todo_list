@@ -1,8 +1,13 @@
-<%= form_for @task do |f| %>
-  <%= f.label :description %>
-  <%= f.text_field :description %>
-  <%= f.label :complete %>
-  <%= f.check_box :complete %>
-  <%= f.submit %>
-<% end %>
-<p><%= link_to "Back", root_path %></p>
+<div class="p-5">
+  <%= form_for @task do |f| %>
+    <%= f.label :description, class: "form-label" %>
+    <%= f.text_field :description, class: "form-control mb-2" %>
+    <%= f.label :complete, class: "form-check-label" %>
+    <%= f.check_box :complete, class: "form-check-input" %>
+    <%= f.submit "Update Task", class: 'd-block btn btn-success mt-3' %>
+  <% end %>
+  <p>
+    <%= link_to "Back", root_path, class: 'btn btn-outline-secondary mt-2' %>
+  </p>
+</div>
+
