@@ -1,3 +1,5 @@
+require 'json'
+
 class TasksController < ApplicationController
   before_action :authenticate_user!
   before_action :your_task, only: %i[edit update destroy]
@@ -45,14 +47,28 @@ class TasksController < ApplicationController
   private
 
   def reaction(task)
-    color = ["color-1", "color-2", "color-3", "color-4"].sample
-    # color = ["#7B68EE", "#6A5ACD", "#800000", "#2F4F4F"].sample
+    color = {"color-1": "#7B68EE", 
+             "color-2": "#6A5ACD",
+             "color-3": "#800000",
+             "color-4": "#2F4F4F"}.to_a.sample
     if task.complete
-      phrase = ["Muito bem", "Continue assim", "Tarefa Concluída", "Aeeeee", "Sucesso!!!"].sample
+      phrase = ["Great Work", "Awesome", "Mission complete", "Wowww", "Nice!!!"].sample
+      @tracking = Tracking.create(event: "Congratulations", 
+                                  properties: {
+                                                phrase: phrase, 
+                                                color: color[1]
+                                              }.to_json
+                                 )
     else
-      phrase = ["Que pena", "Ah não", "Que triste", "Mais empenho", "Infelicidade"].sample
+      phrase = ["Good grief", "Bummer", "Awefull", "Mission Failed", "Not nice"].sample
+      @tracking = Tracking.create(event: "Shame", 
+                                  properties: { 
+                                                phrase: phrase, 
+                                                color: color[1]
+                                              }.to_json
+                                 )
     end
-    flash[color] = phrase
+    flash[color[0]] = phrase
   end
 
   def your_task

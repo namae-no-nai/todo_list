@@ -23,7 +23,7 @@ feature "complete a task on list" do
     expect(page).to have_button("complete-#{@task_3.id}", :value => 'Not Complete')
   end
 
-  scenario "change to not complete", js: true do
+  scenario "change to not complete" do
     visit '/'
     click_button "complete-#{@task_3.id}"
     expect(current_path).to eq(root_path)
