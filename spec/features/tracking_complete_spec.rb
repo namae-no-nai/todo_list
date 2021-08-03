@@ -22,7 +22,6 @@ feature "complete a task on list" do
   
     visit '/'
     click_button "complete-#{@task_3.id}"
-    byebug
     expect(Tracking.last.event).to eq("Shame")
     #TODO test properties
     #expect(["Great Work", "Awesome", "Mission complete", "Wowww", "Nice!!!"]).to include(Tracking.first.properties)
